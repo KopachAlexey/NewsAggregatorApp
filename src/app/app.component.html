@@ -1,0 +1,87 @@
+<mat-toolbar color="primary">
+  <span>{{title}}</span>
+  <span class="spacer"></span>
+  <div class="right-toolbar">
+    <nav class="nav-bar">
+      <button mat-button routerLink="">
+        <span>Главная</span>
+        <mat-icon class="nav-icon">home</mat-icon>
+      </button>
+      @if(isAuthenticated && userData && (userData.role === 'Developer' || userData.role === 'Admin')) {
+        <button mat-button routerLink="/app-settings">
+          <span>Настройки</span>
+          <mat-icon class="nav-icon">settings</mat-icon>
+        </button>
+      }
+      <button mat-button routerLink="/donations">
+        <span>Поддержка</span>
+        <mat-icon class="nav-icon">money</mat-icon>
+      </button>
+    </nav>
+    <div>
+      @if(isAuthenticated) {
+        <div class="user-info">
+          <span class="user-name">{{userData?.unique_name}}</span>
+          <button class="avatar-button"  [matMenuTriggerFor]="userMenu">
+            <app-avatar class="avatar" [name]="userData?.unique_name ?? ''"></app-avatar>
+          </button>
+          <mat-menu #userMenu="matMenu">
+            <div class="menu-header">
+              <app-avatar [name]="userData?.unique_name ?? ''"></app-avatar>
+              <div>
+                <h3>{{userData?.unique_name}}</h3>
+                <p>{{userData?.email}}</p>
+              </div>
+            </div>
+            <mat-divider></mat-divider>
+            <button mat-menu-item>
+              <mat-icon>edit</mat-icon>
+              <span>Изменить</span>
+            </button>
+            <button mat-menu-item (click)="logout()">
+              <mat-icon>logout</mat-icon>
+              Выйти
+            </button>
+          </mat-menu>
+        </div>
+      }
+      @else {
+        <button mat-flat-button (click)="login()">
+          <mat-icon>login</mat-icon>
+          Войти
+        </button>
+      }
+    </div>
+  </div>
+</mat-toolbar>
+<main class="main">
+  <router-outlet />
+</main>
+<footer class="app-footer">
+  <div class="footer-container">
+    <div class="footer-section">
+      <h3>Новостной агрегатор</h3>
+      <p>Все самые свежие новости в одном месте</p>
+    </div>
+    <div class="footer-section">
+      <h3>Контакты</h3>
+      <p>email: NewsAggregator&#64;gmail.com</p>
+      <p>телефон: +375 (29) 702-83-93</p>
+    </div>
+    <div class="footer-section">
+      <h3>Социальные сети</h3>
+      <div class="social-icons">
+        <a href="#"><mat-icon>facebook</mat-icon></a>
+        <a href="#"><mat-icon>telegram</mat-icon></a>
+        <a href="#"><mat-icon>twitter</mat-icon></a>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>&copy; 2025 Новостной агрегатор. Все права защищены.</p>
+  </div>
+</footer>
+
+
+
+

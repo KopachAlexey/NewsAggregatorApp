@@ -1,0 +1,13 @@
+@if(comment) {
+  <div class="comment">
+    <div class="comment-user">
+      <app-avatar [name]="comment.userLogin"></app-avatar>
+      <div class="comments-user-data">
+        <span>{{comment.userLogin}}</span>
+        <span class="comment-creation-date">{{comment.creationDate.toLocaleString()}}</span>
+      </div>
+    </div>
+    <span class="comment-text">{{comment.text}}</span>
+  </div>
+  <app-comments-reactions [commentId]="comment.id" [userData]="userData?? undefined"></app-comments-reactions>
+}

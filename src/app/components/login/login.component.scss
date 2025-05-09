@@ -1,0 +1,43 @@
+.login-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.login-card {
+  width: 100%;
+  max-width: 400px;
+}
+
+.form-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.add-user-link {
+  text-decoration: none;
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.field {
+  width: 100%;
+}
+
+.login-card-header {
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: center;
+}
+
+.login-button {
+  display: flex;
+  justify-content: center;
+}
+
+.server-errors {
+  text-align: center;
+  margin-top: 10px;
+}

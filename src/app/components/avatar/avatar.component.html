@@ -1,0 +1,10 @@
+@if (imageUrl) {
+  <div class="avatar" [ngStyle]="{'background-image': 'url(' + imageUrl + ')'}"></div>
+} @else {
+  <div
+    class="avatar letter-avatar"
+    [ngStyle]="{'background-color': backgroundColor, 'color': '#ffffff'}"
+  >
+    {{ getFirstLetter() }}
+  </div>
+}

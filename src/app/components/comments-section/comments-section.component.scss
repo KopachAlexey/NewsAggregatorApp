@@ -1,0 +1,45 @@
+textarea {
+  resize: none;
+
+}
+
+.comment-section-container {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+}
+
+.comment-section-header {
+  margin-bottom: 20px;
+}
+
+.comment-section {
+  width: 100%;
+  max-width: 700px;
+}
+
+.add-comment-container {
+  margin-bottom: 10px;
+}
+
+.add-comment-field {
+  width: 100%;
+}
+
+.comment-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+.comment-send-button {
+  display: flex;
+  justify-content: end;
+}
+
+.hidden-send-button {
+  visibility: hidden;
+}
+

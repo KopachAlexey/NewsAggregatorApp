@@ -1,0 +1,14 @@
+<div class="reactions">
+  <div class="reaction">
+    <button mat-icon-button (click)="ChangeReaction(likeName)" [color]="currentUserReaction?.reactionName === likeName ? 'primary' : ''">
+      <mat-icon>thumb_up</mat-icon>
+    </button>
+    <span class="count">{{ likesReactions.length }}</span>
+  </div>
+  <div class="reaction">
+    <button mat-icon-button (click)="ChangeReaction(dislikeName)" [color]="currentUserReaction?.reactionName === dislikeName ? 'warn' : ''">
+      <mat-icon>thumb_down</mat-icon>
+    </button>
+    <span class="count">{{ dislikesReactions.length }}</span>
+  </div>
+</div>

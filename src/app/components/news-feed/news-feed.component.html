@@ -1,0 +1,28 @@
+<div class="news-feed-container">
+  <div class="slider-container">
+    <mat-icon>sentiment_very_dissatisfied</mat-icon>
+    <mat-slider
+      min="-5"
+      max="5"
+      step="0.1"
+      thumbLabel
+      (change)="onPositivityChange()">
+        <input matSliderThumb [(ngModel)]="minRate"/>
+    </mat-slider>
+    <mat-icon>sentiment_very_satisfied</mat-icon>
+  </div>
+  @if(newsFeed) {
+    <div class="news-feed">
+      @for (card of newsFeed.newsCards; track $index) {
+          <app-news-card [newsCard]="card"></app-news-card>
+      }
+      <div class="news-paggination">
+        <nav>
+          <mat-paginator [length]="newsFeed.totalPages()" [hidePageSize]="true" [pageIndex]="currentPage - 1" [showFirstLastButtons]="true"  [pageSize]="1" (page)="pageEventHandler($event)" >
+          </mat-paginator>
+        </nav>
+      </div>
+  </div>
+  }
+</div>
+

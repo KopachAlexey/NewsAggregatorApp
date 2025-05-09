@@ -1,0 +1,77 @@
+<div class="add-user-container">
+  <mat-card class="add-user-card">
+    <mat-card-header class="add-user-card-header">
+      <mat-card-title>Регистрация</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <form [formGroup]="addUserForm" (ngSubmit)="addUser()">
+        <div class="form-fields">
+          <div>
+            <mat-form-field class="login-field field">
+              <mat-label>Введите логин</mat-label>
+              <input matInput type="text" formControlName="login" />
+              @if(addUserForm.get('login')?.hasError('required')){
+                <mat-error>Это поле не может быть пустым</mat-error>
+              }
+              @if(addUserForm.get('login')?.hasError('minlength')){
+                <mat-error>Логин должен состоять как минимум из {{minLoginLenth}} символов</mat-error>
+              }
+            </mat-form-field>
+          </div>
+          <div>
+            <mat-form-field class="email-field field">
+              <mat-label>Введите email</mat-label>
+              <input matInput type="email" formControlName="email"/>
+              @if(addUserForm.get('email')?.hasError('required')){
+                <mat-error>Это поле не может быть пустым</mat-error>
+              }
+              @if(addUserForm.get('email')?.hasError('email')){
+                <mat-error>Введите валидный email</mat-error>
+              }
+            </mat-form-field>
+          </div>
+          <div>
+            <mat-form-field class="password-field field">
+              <mat-label>Введите пароль</mat-label>
+              <input matInput [type]="isPasswordVisible? 'text' : 'password'" formControlName="password"/>
+              <button type="button" mat-icon-button (click)="changePasswordVisibility()" matSuffix type="button">
+                <mat-icon>{{isPasswordVisible? 'visibility_off' : 'visibility'}}</mat-icon>
+              </button>
+              @if(addUserForm.get('password')?.hasError('required')){
+                <mat-error>Это поле не может быть пустым</mat-error>
+              }
+              @if(addUserForm.get('password')?.hasError('minlength')){
+                <mat-error>Пароль должен состоять как минимум из {{minPasswordLenth}} символов</mat-error>
+              }
+            </mat-form-field>
+          </div>
+          <div>
+            <mat-form-field class="repeat-password-field field">
+              <mat-label>Повторите пароль</mat-label>
+              <input matInput [type]="isRepeatPasswordVisible? 'text' : 'password'" formControlName="repeatPassword"/>
+              <button type="button" mat-icon-button matSuffix (click)="changeRepeatPasswordVisibility()">
+                <mat-icon>{{isRepeatPasswordVisible? 'visibility_off' : 'visibility'}}</mat-icon>
+              </button>
+              @if(addUserForm.get('repeatPassword')?.hasError('required')) {
+                <mat-error>Это поле не может быть пустым</mat-error>
+              }
+              @if(addUserForm.get('repeatPassword')?.hasError('mismatch')){
+                <mat-error>Пароли не совпадают</mat-error>
+              }
+            </mat-form-field>
+          </div>
+          <div class="add-user-button">
+            <button mat-flat-button type="submit" >Зарегистрироваться</button>
+          </div>
+          <div class="server-errors">
+            @if(serverErrors.length > 0) {
+              @for (error of serverErrors; track $index) {
+                <mat-error>{{error}}</mat-error>
+              }
+            }
+          </div>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>

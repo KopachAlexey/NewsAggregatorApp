@@ -1,0 +1,30 @@
+.comment{
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.comment-creation-date {
+  font-size: 12px;
+}
+
+.comment-user {
+  display: flex;
+  flex-direction: row;
+  gap: 5px;
+}
+
+.comments-user-data {
+  display: flex;
+  flex-direction: column;
+}
+
+.comment-text {
+  padding-left: 4px;
+}
+
+.user-icon {
+  width: 40px;
+  height: 40px;
+  font-size: 40px;
+}

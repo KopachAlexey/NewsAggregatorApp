@@ -1,0 +1,18 @@
+<div class="app-setting-container">
+  <mat-card class="setting-card">
+    <mat-card-header class="setting-card-header">
+      <mat-card-title>Настройки сервера</mat-card-title>
+    </mat-card-header>
+    <mat-card-content class="setting-slides-toggles">
+      <div>
+        <mat-slide-toggle [(ngModel)]="isAggregationActive" (change)="onAggregationChanged($event)">Агрегация</mat-slide-toggle>
+      </div>
+      <div>
+        <mat-slide-toggle [(ngModel)]="isRatingActive" (change)="onRatingChanged($event)">Оценка</mat-slide-toggle>
+      </div>
+      <div>
+        <mat-slide-toggle [(ngModel)]="isDelExpiredTokensActive" (change)="onDelExpiredTokensChanged($event)">Очистка токенов</mat-slide-toggle>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

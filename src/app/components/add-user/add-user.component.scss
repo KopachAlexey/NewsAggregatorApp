@@ -1,0 +1,36 @@
+.add-user-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.add-user-card {
+  width: 100%;
+  max-width: 400px;
+}
+
+.field {
+  width: 100%;
+}
+
+.add-user-card-header {
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: center;
+}
+
+.add-user-button  {
+  display: flex;
+  justify-content: center;
+}
+
+.form-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.server-errors {
+  text-align: center;
+  margin-top: 10px;
+}
