@@ -1,11 +1,15 @@
-<mat-toolbar color="primary">
+<mat-toolbar class="main-toolbar">
   <span>{{title}}</span>
   <span class="spacer"></span>
   <div class="right-toolbar">
     <nav class="nav-bar">
       <button mat-button routerLink="">
-        <span>Главная</span>
+        <span class="test">Главная</span>
         <mat-icon class="nav-icon">home</mat-icon>
+      </button>
+      <button mat-button routerLink="/donations">
+        <span>О сайте</span>
+        <mat-icon class="nav-icon">info_outline</mat-icon>
       </button>
       @if(isAuthenticated && userData && (userData.role === 'Developer' || userData.role === 'Admin')) {
         <button mat-button routerLink="/app-settings">
@@ -13,10 +17,6 @@
           <mat-icon class="nav-icon">settings</mat-icon>
         </button>
       }
-      <button mat-button routerLink="/donations">
-        <span>Поддержка</span>
-        <mat-icon class="nav-icon">money</mat-icon>
-      </button>
     </nav>
     <div>
       @if(isAuthenticated) {
@@ -25,7 +25,7 @@
           <button class="avatar-button"  [matMenuTriggerFor]="userMenu">
             <app-avatar class="avatar" [name]="userData?.unique_name ?? ''"></app-avatar>
           </button>
-          <mat-menu #userMenu="matMenu">
+          <mat-menu #userMenu="matMenu" class="user-menu">
             <div class="menu-header">
               <app-avatar [name]="userData?.unique_name ?? ''"></app-avatar>
               <div>
@@ -33,8 +33,28 @@
                 <p>{{userData?.email}}</p>
               </div>
             </div>
+            <div class="slider-container">
+              <div class="slider-header">
+                <span>Текущий рейтинг:</span>
+                <span>{{visibleNewsRate()}}</span>
+              </div>
+              <!--<mat-icon>sentiment_very_dissatisfied</mat-icon>-->
+              <mat-slider
+                  class="rate-slider"
+                  min="-5"
+                  max="5"
+                  step="0.1"
+                  thumbLabel
+                  (change)="onPositivityChange()"
+                  (click)="$event.stopPropagation()"
+                  (mousedown)="$event.stopPropagation()"
+                  (touchstart)="$event.stopPropagation()">
+                  <input matSliderThumb [(ngModel)]="newsRate"/>
+              </mat-slider>
+              <!--<mat-icon>sentiment_very_satisfied</mat-icon>-->
+            </div>
             <mat-divider></mat-divider>
-            <button mat-menu-item>
+            <button mat-menu-item (click)="editUser()">
               <mat-icon>edit</mat-icon>
               <span>Изменить</span>
             </button>
@@ -46,10 +66,12 @@
         </div>
       }
       @else {
-        <button mat-flat-button (click)="login()">
-          <mat-icon>login</mat-icon>
-          Войти
-        </button>
+        <div class="login-btn">
+           <button mat-button (click)="login()">
+            <mat-icon class="q">login</mat-icon>
+            Войти
+          </button>
+        </div>
       }
     </div>
   </div>
@@ -60,7 +82,7 @@
 <footer class="app-footer">
   <div class="footer-container">
     <div class="footer-section">
-      <h3>Новостной агрегатор</h3>
+      <h3>News Aggregator</h3>
       <p>Все самые свежие новости в одном месте</p>
     </div>
     <div class="footer-section">
@@ -78,7 +100,7 @@
     </div>
   </div>
   <div class="footer-bottom">
-    <p>&copy; 2025 Новостной агрегатор. Все права защищены.</p>
+    <p>&copy; 2025 News Aggregator. Все права защищены.</p>
   </div>
 </footer>
 
