@@ -1,12 +1,8 @@
-.add-user-container {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-}
-
 .add-user-card {
   width: 100%;
-  max-width: 400px;
+  max-width: 500px;
+  margin: 2rem auto;
+  padding: 1rem 2rem 2rem 2rem;
 }
 
 .field {
@@ -14,7 +10,7 @@
 }
 
 .add-user-card-header {
-  margin-bottom: 20px;
+  margin-bottom: 30px;
   display: flex;
   justify-content: center;
 }
@@ -28,9 +24,4 @@
   display: flex;
   flex-direction: column;
   gap: 10px;
-}
-
-.server-errors {
-  text-align: center;
-  margin-top: 10px;
 }
