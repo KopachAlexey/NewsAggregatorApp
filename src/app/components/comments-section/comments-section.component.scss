@@ -3,6 +3,10 @@ textarea {
 
 }
 
+.comment {
+  max-width: 100%;
+}
+
 .comment-section-container {
   margin-top: 20px;
   display: flex;
@@ -15,7 +19,6 @@ textarea {
 
 .comment-section {
   width: 100%;
-  max-width: 700px;
 }
 
 .add-comment-container {

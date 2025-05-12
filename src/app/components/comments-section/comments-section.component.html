@@ -1,27 +1,25 @@
-<div class="comment-section-container">
-    <div class="comment-section">
-      <mat-card>
-        <mat-card-header class="comment-section-header">
-          <mat-card-title>Комментарии ({{comments.length}})</mat-card-title>
-        </mat-card-header>
-        <mat-card-content >
-          <div class="add-comment-container">
-            <mat-form-field class="add-comment-field" appearance="outline">
-              <mat-label>Оставить комментарий</mat-label>
-              <textarea matInput cdkTextareaAutosize rows="2" [(ngModel)]="newComment.text" ></textarea>
-              <div [classList]="newComment.text.length > 0? 'comment-send-button':'hidden-send-button' ">
-                <button mat-flat-button (click)="addComment()">
-                  <mat-icon>send</mat-icon> Отправить
-                </button>
-              </div>
-            </mat-form-field>
+<div class="comment-section">
+  <mat-card>
+    <mat-card-header class="comment-section-header">
+      <mat-card-title>Комментарии ({{comments.length}})</mat-card-title>
+    </mat-card-header>
+    <mat-card-content >
+      <div class="add-comment-container">
+        <mat-form-field class="add-comment-field" appearance="outline">
+          <mat-label>Оставить комментарий</mat-label>
+          <textarea matInput cdkTextareaAutosize rows="2" [(ngModel)]="newComment.text" ></textarea>
+          <div [classList]="newComment.text.length > 0? 'comment-send-button':'hidden-send-button' ">
+            <button mat-flat-button (click)="addComment()">
+              <mat-icon>send</mat-icon> Отправить
+            </button>
           </div>
-          <div class="comment-list">
-            @for(comment of comments; track $index) {
-              <app-comment [comment]="comment" [userData]="tokenData?? undefined"></app-comment>
-            }
-          </div>
-        </mat-card-content>
-      </mat-card>
-    </div>
+        </mat-form-field>
+      </div>
+      <div class="comment-list">
+        @for(comment of comments; track comment.id) {
+          <app-comment class="comment" [comment]="comment" [userData]="tokenData?? undefined"></app-comment>
+        }
+      </div>
+    </mat-card-content>
+  </mat-card>
 </div>
