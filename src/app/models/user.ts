@@ -4,4 +4,5 @@ export interface User {
   email : string;
   roleId : number;
   roleName? : string;
+  newsMinRate : number;
 }
