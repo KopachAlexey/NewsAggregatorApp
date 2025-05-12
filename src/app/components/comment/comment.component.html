@@ -9,5 +9,7 @@
     </div>
     <span class="comment-text">{{comment.text}}</span>
   </div>
-  <app-comments-reactions [commentId]="comment.id" [userData]="userData?? undefined"></app-comments-reactions>
+  <app-comments-reactions [commentId]="comment.id" [userData]="userData?? undefined"
+    [commentReactions]="comment.userCommentReactions?? []">
+  </app-comments-reactions>
 }
