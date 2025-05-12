@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { NgStyle } from '@angular/common';
+import { TokensService } from '../../services/tokens.service';
 
 @Component({
   selector: 'app-avatar',
@@ -10,6 +11,7 @@ import { NgStyle } from '@angular/common';
   styleUrl: './avatar.component.scss'
 })
 export class AvatarComponent implements OnInit {
+
   @Input() name : string = '';
   @Input() imageUrl? : string;
   backgroundColor? : string;
