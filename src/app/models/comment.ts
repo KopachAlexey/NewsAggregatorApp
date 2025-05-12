@@ -1,3 +1,5 @@
+import { ReactionToComment } from "./reaction-to-comment";
+
 export interface Comment {
   id : string;
   text : string;
@@ -5,4 +7,5 @@ export interface Comment {
   userId : string;
   userLogin : string;
   userRoleName? : string;
+  userCommentReactions? : ReactionToComment[]
 }
