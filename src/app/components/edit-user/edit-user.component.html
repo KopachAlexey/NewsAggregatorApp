@@ -1,0 +1,70 @@
+<mat-card class="profile-card">
+  <mat-card-header class="edit-user-card-header">
+    <mat-card-title>Редактирование профиля</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <form [formGroup]="editUserForm" (ngSubmit)="editUser()">
+      <!--<mat-form-field appearance="outline" class="full-width">
+        <mat-label>Текущий логин</mat-label>
+        <input matInput [value]="userData?.unique_name" readonly>
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Текущий email</mat-label>
+        <input matInput [value]="userData?.email" readonly>
+      </mat-form-field>-->
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Новый логин</mat-label>
+        <input matInput formControlName="login">
+        @if(editUserForm.get('login')?.hasError('minlength')){
+          <mat-error>Логин должен состоять как минимум из {{minLoginLenth}} символов</mat-error>
+        }
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Новый email</mat-label>
+        <input matInput formControlName="email" type="email">
+        @if(editUserForm.get('email')?.hasError('email')){
+          <mat-error>Введите валидный email</mat-error>
+        }
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Новый пароль</mat-label>
+        <input matInput formControlName="newPassword" [type]="isneWPasswordVisible? 'text' : 'password'">
+        <button type="button" mat-icon-button (click)="changeneWPasswordVisibility()" matSuffix type="button">
+          <mat-icon>{{isneWPasswordVisible? 'visibility_off' : 'visibility'}}</mat-icon>
+        </button>
+        @if(editUserForm.get('newPassword')?.hasError('minlength')){
+          <mat-error>Пароль должен состоять как минимум из {{minPasswordLenth}} символов</mat-error>
+        }
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Подтвердите пароль</mat-label>
+        <input matInput formControlName="repeatPassword" [type]="isRepeatPasswordVisible? 'text' : 'password'">
+        <button type="button" mat-icon-button (click)="changeRepeatPasswordVisibility()" matSuffix type="button">
+          <mat-icon>{{isRepeatPasswordVisible? 'visibility_off' : 'visibility'}}</mat-icon>
+        </button>
+        @if(editUserForm.get('repeatPassword')?.hasError('mismatch')){
+          <mat-error>Пароли не совпадают</mat-error>
+        }
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Текущий пароль</mat-label>
+        <input matInput formControlName="password" [type]="isPasswordVisible? 'text' : 'password'" required>
+        <button type="button" mat-icon-button (click)="changePasswordVisibility()" matSuffix type="button">
+          <mat-icon>{{isPasswordVisible? 'visibility_off' : 'visibility'}}</mat-icon>
+        </button>
+         @if(editUserForm.get('password')?.hasError('required')){
+            <mat-error>Для изменения данных пользователя нужно ввести текущий пароль</mat-error>
+          }
+          @if(editUserForm.get('password')?.hasError('minlength')){
+            <mat-error>Пароль должен состоять как минимум из {{minPasswordLenth}} символов</mat-error>
+          }
+      </mat-form-field>
+      <div class="button-container">
+        <button mat-flat-button color="warn" type="button" (click)="goBack()">Назад</button>
+        <button mat-flat-button color="primary" type="submit">
+          Сохранить изменения
+        </button>
+      </div>
+    </form>
+  </mat-card-content>
+</mat-card>
