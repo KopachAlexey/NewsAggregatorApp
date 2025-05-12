@@ -1,18 +1,33 @@
 @if(newsCard) {
-    <mat-card class="news-card">
-      <p>{{newsCard.sourceName}}</p>
-      <img matCardImage src={{newsCard.imageUrl}}>
-      <mat-card-header>
-        <mat-card-title>{{newsCard.headline}}</mat-card-title>
+    <mat-card  class="news-card">
+      <div class="newsNavDiv" [id]="newsCard.id"></div>
+       @if(chechIsNewsNews()) {
+        <div class="new-badge">
+          <span>НОВОЕ</span>
+        </div>
+      }
+      <mat-card-header class="card-header">
+        <app-avatar class="news-avatar" [name]="newsCard.sourceName"
+          imageUrl="">
+        </app-avatar>
+        <div class="header-data">
+          <mat-card-title>{{ newsCard.sourceName }}</mat-card-title>
+          <mat-card-subtitle class="time-subtitle">
+            <mat-icon>schedule</mat-icon>
+            {{ newsCard.publicationDate.toDateString()}}
+          </mat-card-subtitle>
+        </div>
       </mat-card-header>
-      <mat-card-content>
-        <p>{{newsCard.publicationDate.toLocaleString()}}</p>
-        <p>{{newsCard.positivityRate}}</p>
+      <img mat-card-image [src]="newsCard.imageUrl" alt="News image" class="news-image">
+      <mat-card-content class="news-card-content">
+        <h2 class="news-title">{{ newsCard.headline }}</h2>
       </mat-card-content>
-      <mat-card-actions align="start">
-        <a mat-flat-button [routerLink]="['/news/', newsCard.id]">Подробнее</a>
+      <mat-card-actions class="card-actions" align="end">
+        <button mat-flat-button color="primary" (click)="openDetails(newsCard.id)">
+          Подробнее
+          <mat-icon>arrow_forward</mat-icon>
+        </button>
       </mat-card-actions>
-      <mat-card-footer></mat-card-footer>
     </mat-card>
 }
 
