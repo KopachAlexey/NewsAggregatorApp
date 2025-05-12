@@ -65,6 +65,7 @@ export class AppSettingsComponent implements OnInit{
         console.error('error when try get tokens cleaner job', err);
       })
     });
+    window.scrollTo(0 , 0);
   }
 
   onAggregationChanged(event: MatSlideToggleChange) : void {
