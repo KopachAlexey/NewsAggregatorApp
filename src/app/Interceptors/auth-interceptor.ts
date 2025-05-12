@@ -4,11 +4,13 @@ import { inject } from '@angular/core';
 import { AuthenticationService } from '../services/authentication.service';
 import { catchError, Observable, switchMap, throwError } from 'rxjs';
 import { Router } from '@angular/router';
+import { NewsRateService } from '../services/news-rate.service';
 
 export const authInterceptor: HttpInterceptorFn = (req, next) : Observable<HttpEvent<unknown>> => {
   const tokensServices = inject(TokensService);
   const authService = inject(AuthenticationService);
   const router = inject(Router);
+  const newsRateServices = inject(NewsRateService);
   const accessToken = tokensServices.getAccessToken();
   const refreshToke = tokensServices.getRefreshToken();
   const authReq = accessToken?
@@ -32,6 +34,7 @@ export const authInterceptor: HttpInterceptorFn = (req, next) : Observable<HttpE
           catchError((refreshError) => {
             console.error('error when refresh token', refreshError)
             tokensServices.clearTokens();
+            newsRateServices.clearNewsRate();
             router.navigate(['login']);
             return throwError(() => refreshError);
           })
