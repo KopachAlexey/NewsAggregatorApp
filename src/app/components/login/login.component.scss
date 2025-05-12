@@ -1,12 +1,8 @@
-.login-container {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-}
-
 .login-card {
   width: 100%;
-  max-width: 400px;
+  max-width: 450px;
+  margin: 2rem auto;
+  padding: 1rem 2rem 2rem 2rem;
 }
 
 .form-fields {
@@ -27,7 +23,7 @@
 }
 
 .login-card-header {
-  margin-bottom: 20px;
+  margin-bottom: 30px;
   display: flex;
   justify-content: center;
 }
@@ -37,7 +33,3 @@
   justify-content: center;
 }
 
-.server-errors {
-  text-align: center;
-  margin-top: 10px;
-}

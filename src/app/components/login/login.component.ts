@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { MatSnackBarModule, MatSnackBar } from '@angular/material/snack-bar';
+import { Component, OnInit } from '@angular/core';
 import { AuthenticationService } from '../../services/authentication.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { NewsAggregatorConsts } from '../../models/news-aggregator-consts';
@@ -15,16 +16,17 @@ import {MatRippleModule} from '@angular/material/core';
 @Component({
   selector: 'app-login',
   standalone : true,
-  imports: [ReactiveFormsModule, MatIconModule, MatInputModule, MatButtonModule, MatFormFieldModule, MatCardModule, RouterLink, MatRippleModule],
+  imports: [ReactiveFormsModule, MatIconModule, MatInputModule, MatButtonModule, MatFormFieldModule,
+    MatCardModule, RouterLink, MatRippleModule, MatSnackBarModule],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
   private readonly authServices : AuthenticationService;
   private readonly returnUrlService : ReturnUrlService;
   private _isPasswordVisible : boolean = false;
+  private snackBar: MatSnackBar;
   loginForm : FormGroup;
-  serverErrors? : string;
   minLoginLenth : number;
   minPasswordLenth : number;
   returnUrl : string = '';
@@ -33,10 +35,16 @@ export class LoginComponent {
     return this._isPasswordVisible;
   }
 
-  constructor(authServices : AuthenticationService, returnUrlService : ReturnUrlService)
+  ngOnInit(): void {
+    window.scrollTo(0 , 0);
+  }
+
+  constructor(authServices : AuthenticationService, returnUrlService : ReturnUrlService,
+    snackBar: MatSnackBar)
   {
     this.authServices = authServices;
     this.returnUrlService = returnUrlService;
+    this.snackBar = snackBar;
     this.minLoginLenth = NewsAggregatorConsts.MinLoginLenth;
     this.minPasswordLenth = NewsAggregatorConsts.MinPasswordLenth;
     this.loginForm = new FormGroup({
@@ -53,20 +61,31 @@ export class LoginComponent {
     this.authServices.login(password, login).subscribe( {
       next : (tokens) => {
         this.loginForm.reset();
-        this.returnUrlService.redirectToReturnUrl();
+        this.returnUrlService.returnAfterLogin();
       },
       error : (err : HttpErrorResponse) => {
         console.error("Authentication faild");
-        if(err.status === 401 || err.status === 400) {
-          this.serverErrors = NewsAggregatorConsts.LoginFailedMessage
+        if(err.status === 401) {
+          this.snackBar.open('Ошибка: Неверное имя пользователя или пароль', 'ОК', {
+            panelClass: ['error-snackbar'],
+            verticalPosition: 'top'
+          });
         }
-        if(err.status === 500)
-          this.serverErrors = NewsAggregatorConsts.ServerErrorMessage;
-        this.loginForm.get<string>('password')?.setValue('');
+        else if(err.status === 400) {
+          this.snackBar.open('Ошибка', 'Закрыть', {
+            panelClass: ['error-snackbar'],
+            verticalPosition: 'top'
+          });
+        }
+        else if(err.status === 500) {
+          this.snackBar.open('Ошибка: На сервере произошла ошибка', 'ОК', {
+            panelClass: ['error-snackbar'],
+            verticalPosition: 'top'
+          });
+        }
       }
     });
   }
-
   changePasswordVisibility() : void {
     this._isPasswordVisible = !this._isPasswordVisible;
   }
