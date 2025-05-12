@@ -22,10 +22,9 @@ export class AuthenticationService {
   }
 
   login(password : string, login : string) : Observable<Tokens> {
-    let loginFormData = new FormData();
-    loginFormData.append('password', password);
-    loginFormData.append('login', login);
-    return this.newsAggregatorService.post<Tokens>(this.loginResource, loginFormData).pipe(
+    const body = {password, login};
+    return this.newsAggregatorService
+    .post<Tokens>(this.loginResource, body).pipe(
       catchError((error : HttpErrorResponse) => {
         return throwError( () => error)
       }),
@@ -43,9 +42,6 @@ export class AuthenticationService {
     return this.newsAggregatorService.post<void>(this.logoutResource, {}).pipe(
       catchError((error : HttpErrorResponse) => {
         return throwError(() => error)
-      }),
-      tap(() => {
-        this.tokensService.clearTokens();
       })
     );
   }

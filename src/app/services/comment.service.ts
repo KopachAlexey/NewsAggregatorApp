@@ -10,21 +10,24 @@ import { AddResourceResponse } from '../models/add-resource-response';
   providedIn: 'root'
 })
 export class CommentService {
-  private commentResource : string = 'Comments';
+  private getCommentsByNewsIdResource : string = 'Comments/get-comments-by-news-id';
+  private addCommentdResource : string = 'Comments/add-comment';
   private readonly newsAggregatorService : NewsAggregatorService
 
   constructor(newsAggregatorService : NewsAggregatorService) {this.newsAggregatorService = newsAggregatorService}
 
   getCommentsByNewsId(newsId : string) : Observable<Comment[]> {
     let params = new HttpParams();
-    return this.newsAggregatorService.get<Comment[]>(this.commentResource, params.appendAll({newsId})).pipe(
+    return this.newsAggregatorService.get<Comment[]>(this.getCommentsByNewsIdResource,
+      params.appendAll({newsId})).pipe(
       map((comments : Comment[]) => comments.map(comment => ({
         id : comment.id,
         userId : comment.userId,
         creationDate : new Date(comment.creationDate),
         text : comment.text,
         userLogin : comment.userLogin,
-        userRoleName : comment.userRoleName
+        userRoleName : comment.userRoleName,
+        userCommentReactions : comment.userCommentReactions
       })),
       catchError((error) => {
         return throwError(() => error);
@@ -33,12 +36,14 @@ export class CommentService {
   }
 
   addComment(newComment : NewComment) : Observable<AddResourceResponse> {
-    let newCommentData = new FormData();
-    newCommentData.append('text', newComment.text);
-    newCommentData.append('creationDate', newComment.creationDate.toUTCString());
-    newCommentData.append('newsId', newComment.newsId);
-    newCommentData.append('userId', newComment.userId);
-    return this.newsAggregatorService.post<AddResourceResponse>(this.commentResource, newCommentData).pipe(
+    const body = {
+      text : newComment.text,
+      creationDate : newComment.creationDate,
+      newsId : newComment.newsId,
+      userId : newComment.userId
+    };
+    return this.newsAggregatorService
+    .post<AddResourceResponse>(this.addCommentdResource, body).pipe(
       catchError((error) => {
         return throwError(() => error);
       })
