@@ -1,28 +1,48 @@
-<div class="news-feed-container">
-  <div class="slider-container">
-    <mat-icon>sentiment_very_dissatisfied</mat-icon>
-    <mat-slider
-      min="-5"
-      max="5"
-      step="0.1"
-      thumbLabel
-      (change)="onPositivityChange()">
-        <input matSliderThumb [(ngModel)]="minRate"/>
-    </mat-slider>
-    <mat-icon>sentiment_very_satisfied</mat-icon>
-  </div>
-  @if(newsFeed) {
-    <div class="news-feed">
-      @for (card of newsFeed.newsCards; track $index) {
-          <app-news-card [newsCard]="card"></app-news-card>
+<div class="container">
+  <section class="news-feed">
+    @if(newsFeed) {
+      @for (card of newsFeed.newsCards; track card.id) {
+        <app-news-card class="news-card" [newsCard]="card"></app-news-card>
       }
-      <div class="news-paggination">
-        <nav>
-          <mat-paginator [length]="newsFeed.totalPages()" [hidePageSize]="true" [pageIndex]="currentPage - 1" [showFirstLastButtons]="true"  [pageSize]="1" (page)="pageEventHandler($event)" >
-          </mat-paginator>
-        </nav>
-      </div>
-  </div>
-  }
-</div>
+      <mat-paginator
+        [pageSize]="1"
+        [pageIndex]="currentPage-1"
+        [showFirstLastButtons]="true"
+        [length]="newsFeed.totalPages()"
+        (page)="pageEventHandler($event)"
+        class="hidden-paginator"
+        #paginator>
+      </mat-paginator>
+        <div class="custom-navigation">
+          <button mat-mini-fab (click)="paginator.firstPage()"  class="nav-button"
+            [disabled]="paginator.pageIndex === 0">
+            <mat-icon>first_page</mat-icon>
+          </button>
 
+          <button mat-mini-fab (click)="paginator.previousPage()" class="nav-button"
+            [disabled]="!paginator.hasPreviousPage()">
+            <mat-icon>chevron_left</mat-icon>
+          </button>
+
+          <span class="page-info">
+            Страница {{ paginator.pageIndex + 1 }} из {{newsFeed.totalPages() }}
+          </span>
+
+          <button mat-mini-fab (click)="paginator.nextPage()" class="nav-button"
+            [disabled]="!paginator.hasNextPage()">
+            <mat-icon>chevron_right</mat-icon>
+          </button>
+
+          <button mat-mini-fab (click)="paginator.lastPage()" class="nav-button"
+            [disabled]="paginator.pageIndex === newsFeed.totalPages() - 1">
+            <mat-icon>last_page</mat-icon>
+          </button>
+        </div>
+    }
+  </section>
+  <aside class="ad-wrapper">
+    @for(card of addCards; track card.title) {
+      <app-add-card [addCard]="card"></app-add-card>
+    }
+  </aside>
+</div>
