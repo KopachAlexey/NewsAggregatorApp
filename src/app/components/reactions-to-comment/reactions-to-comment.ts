@@ -18,8 +18,9 @@ export class ReactionsToCommentComponent implements OnInit {
   readonly dislikeName : string = 'dislike';
   private readonly reactionsToCommentService : ReactionsToCommentService;
 
-  likesReactions : ReactionToComment[] = [];
-  dislikesReactions : ReactionToComment[] = [];
+  @Input() commentReactions : ReactionToComment[] = [];
+  //likesReactions : ReactionToComment[] = [];
+  //dislikesReactions : ReactionToComment[] = [];
   currentUserReaction? : ReactionToComment;
   @Input() commentId? : string;
   @Input() userData? : TokenData;
@@ -32,7 +33,7 @@ export class ReactionsToCommentComponent implements OnInit {
 
   ngOnInit(): void {
     if(this.commentId) {
-      this.reactionsToCommentService.getReactionsByReactionName(this.commentId, this.likeName).subscribe({
+      /*this.reactionsToCommentService.getReactionsByReactionName(this.commentId, this.likeName).subscribe({
         next : (likesReactions) => {
           this.likesReactions = likesReactions;
         },
@@ -47,20 +48,15 @@ export class ReactionsToCommentComponent implements OnInit {
         error : (err) => {
           console.log('error when trying get dislike reactions',err);
         }
-      });
+      });*/
       if(this.userData)
-        this.getUserReaction(this.commentId, this.userData.nameid);
+        this.getUserReaction(this.userData.nameid);
     }
   }
 
   ChangeReaction(reactionName : string) : void {
     if(!this.userData || !this.commentId)
       return;
-    const newReactionToComment : NewReactionToComment = {
-      reactionName : reactionName,
-      commentId : this.commentId,
-      userId : this.userData.nameid
-    }
     if(this.currentUserReaction) {
       if(this.currentUserReaction.reactionName === reactionName)
         return;
@@ -71,15 +67,17 @@ export class ReactionsToCommentComponent implements OnInit {
     }
   }
 
-  getUserReaction(commentId : string, userId : string) : void {
-    this.reactionsToCommentService.getReactionByUserId(commentId, userId).subscribe({
+  getUserReaction(userId : string) : void {
+    /*this.reactionsToCommentService.getReactionByUserId(commentId, userId).subscribe({
       next : (currentUserReaction) => {
-        this.currentUserReaction = currentUserReaction;
+          this.currentUserReaction = currentUserReaction;
       },
       error : (err) => {
         console.log('error when trying get user reaction',err);
       }
-    });
+    });*/
+    this.currentUserReaction = this.commentReactions
+      .find(c => c.userId === userId);
   }
 
   addUserReaction(commentId : string, userData : TokenData, reactionName : string) : void {
@@ -92,10 +90,7 @@ export class ReactionsToCommentComponent implements OnInit {
           userLogin : userData.unique_name,
           reactionName : reactionName
         };
-        if(reactionName === this.likeName)
-          this.likesReactions.push(this.currentUserReaction);
-        else
-          this.dislikesReactions.push(this.currentUserReaction)
+        this.commentReactions.push(this.currentUserReaction)
       },
       error : (err) => {
         console.error('error when trying to add reaction',err);
@@ -106,21 +101,20 @@ export class ReactionsToCommentComponent implements OnInit {
   updateUserReaction(currentUserReaction : ReactionToComment, newReactionName : string) : void {
     this.reactionsToCommentService.updateReaction(currentUserReaction.userId, currentUserReaction.commentId, newReactionName).subscribe({
       next : () => {
+        /*const userReactionFromAllReactions = this.commentReactions
+        .find(c => c.id === currentUserReaction.id);
+        if(userReactionFromAllReactions)
+          userReactionFromAllReactions.reactionName = newReactionName;*/
         currentUserReaction.reactionName = newReactionName;
-        if(newReactionName === this.likeName) {
-          let userReactionIndex : number = this.dislikesReactions.indexOf(currentUserReaction);
-          this.dislikesReactions.slice(userReactionIndex, 1);
-          this.likesReactions.push(currentUserReaction);
-        }
-        else {
-          let userReactionIndex : number = this.likesReactions.indexOf(currentUserReaction);
-          this.likesReactions.slice(userReactionIndex, 1);
-          this.dislikesReactions.push(currentUserReaction);
-        }
       },
       error : (err) => {
         console.error('error when trying to update reaction',err);
       }
     });
+  }
+
+  getReactionsCount(reactionName : string) : number {
+    const reactions = this.commentReactions.filter(c => c.reactionName === reactionName);
+    return reactions.length;
   }
 }
