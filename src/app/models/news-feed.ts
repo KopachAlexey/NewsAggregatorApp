@@ -19,7 +19,8 @@ export class NewsFeed {
   public totalPages() : number {
     if(this.pageSize == 0)
       return 0;
-    return Math.round(this.totalNews / this.pageSize);
+    let totalPages : number = Math.round(this.totalNews / this.pageSize);
+    return totalPages!= 0? totalPages : 1;
   }
 
   private mapDates() : void {
