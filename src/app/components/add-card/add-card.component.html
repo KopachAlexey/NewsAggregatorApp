@@ -1,0 +1,27 @@
+@if(addCard) {
+<mat-card class="banner-card">
+  <div class="banner-container">
+    <div class="banner-content">
+      <h1 class="banner-title">{{ addCard.title }}</h1>
+      <div class="banner-image">
+        <img [src]="addCard.imgUrl" alt="Реклама" class="image">
+      </div>
+      <h2 class="banner-subtitle">{{ addCard.subtitle }}</h2>
+      <!--<ul class="feature-list">
+        @for(feature of addCard.features; track feature) {
+          <li class="feature-item">
+            <mat-icon class="feature-icon">check_circle</mat-icon>
+            {{ feature }}
+          </li>
+        }
+      </ul> -->
+      <mat-card-actions class="card-actions">
+        <button mat-flat-button color="primary" class="cta-button">
+          {{ addCard.ctaText }}
+          <mat-icon>arrow_forward</mat-icon>
+        </button>
+      </mat-card-actions>
+    </div>
+  </div>
+</mat-card>
+}

@@ -1,0 +1,129 @@
+/*.sticky-ad {
+  min-height: 500px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transition: transform 0.3s ease;
+  &:hover {
+    transform: scale(1.02);
+  }
+}
+@media (max-width: 768px) {
+  .sticky-ad {
+    max-width: 600px;
+  }
+}*/
+@use '@angular/material' as mat;
+
+.banner-card {
+  border-radius: 16px;
+  overflow: hidden;
+  //margin: 16px;
+  min-width: 270px;
+  max-width: 550px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  transition: transform 0.3s ease;
+  //margin-top: 80px;
+  &:hover {
+    transform: scale(1.02);
+  }
+}
+
+.banner-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 6px;
+  gap: 32px;
+}
+
+.card-actions {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.banner-content {
+  flex: 1;
+  padding: 8px;
+}
+
+.banner-title {
+  font-size: 1.9rem;
+  font-weight: 700;
+  color: #2c3e50;
+  margin-bottom: 12px;
+  line-height: 1.2;
+}
+
+.banner-subtitle {
+  font-size: 1.1rem;
+  font-weight: 400;
+  color: #7f8c8d;
+  margin-bottom: 12px;
+}
+
+.feature-list {
+  list-style: none;
+  padding: 0;
+  margin-bottom: 32px;
+}
+
+.feature-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 12px;
+  font-size: 1rem;
+  color: #34495e;
+}
+
+.feature-icon {
+  //color: mat.get-color-from-palette(mat.$green-palette, 500);
+  margin-right: 8px;
+}
+
+.cta-button {
+  width: 100%;
+  padding: 12px 24px;
+  font-size: 1rem;
+  font-weight: 500;
+  border-radius: 50px;
+  transition: all 0.3s ease;
+
+  mat-icon {
+    margin-left: 8px;
+  }
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  }
+}
+
+.banner-image {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 10px;
+  max-height: 220px;
+
+  .image {
+    max-width: 100%;
+    border-radius: 8px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+  }
+}
+
+@media (max-width: 768px) {
+  .banner-container {
+    flex-direction: column;
+
+  }
+
+  .banner-card {
+    margin-top: 16px;
+  }
+
+  .banner-title {
+    font-size: 1.8rem;
+  }
+}
