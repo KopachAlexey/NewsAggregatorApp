@@ -1,26 +1,52 @@
-@if(news){
-  <div class="news-container">
-    <div class="news">
-      <mat-card>
-        <img matCardImage src={{news.imageUrl}}>
-          <mat-card-header>
-              <mat-card-title>{{news.headline}}</mat-card-title>
-              <mat-card-subtitle>{{news.summary}}</mat-card-subtitle>
-          </mat-card-header>
-          <mat-card-content [innerHTML]="news.content">
-          </mat-card-content>
-          <mat-card-actions align="start">
-              <a (click)="goBack()" mat-flat-button >Назад</a>
-          </mat-card-actions>
-          <mat-card-footer>
-            <p>Опубликовано: {{news.publicationDate}}</p>
-            <p>Оценка: {{news.positivityRate}}</p>
-            <p>
-              <a target="_blank" href={{news.url}}>Оригинальная новость</a>
-            </p>
-          </mat-card-footer>
+<div class="container">
+  <section class="news-section">
+    @if(news) {
+      <mat-card class="details-card">
+        <mat-card-header class="header-section">
+          <div class="header-content">
+            <div class="source-header">
+              <app-avatar class="source-avatar" [name]="news.sourceName"
+                imageUrl="">
+              </app-avatar>
+              <div class="source-info">
+                <h1 class="source-name">{{ news.sourceName }}</h1>
+                <div class="publish-date">
+                  <mat-icon>schedule</mat-icon>
+                  <span>{{visibleNewsDate(news.publicationDate)}}</span>
+                </div>
+              </div>
+            </div>
+            <mat-chip class="rating-chip" color="accent">
+              <div class="rating-block">
+                <mat-icon>star</mat-icon>
+                <span>{{ visibleNewsRate(news.positivityRate? news.positivityRate : 0)}}</span>
+              </div>
+            </mat-chip>
+          </div>
+        </mat-card-header>
+        <img mat-card-image [src]="news.imageUrl" alt="News image" class="main-image">
+        <mat-card-content class="content-section">
+          <h1 class="news-title">{{ news.headline}}</h1>
+          <div class="news-content" [innerHTML]="newsContent"></div>
+          <div class="original-link">
+            <mat-icon>link</mat-icon>
+            <a [href]="news.url" target="_blank" rel="noopener">
+              Читать оригинал статьи
+            </a>
+          </div>
+        </mat-card-content>
       </mat-card>
-    </div>
-  </div>
-}
-<app-comments-section [newsId]="newsId" ></app-comments-section>
+      <app-comments-section class="news-comment" [newsId]="newsId" ></app-comments-section>
+      <button mat-fab class="back-button" (click)="goBack()" aria-label="Назад">
+        <mat-icon>arrow_back</mat-icon>
+      </button>
+    }
+  </section>
+
+  <aside class="ad-wrapper">
+    @for(card of addCards; track card.title) {
+      <app-add-card [addCard]="card"></app-add-card>
+    }
+  </aside>
+</div>
+
